@@ -1,0 +1,64 @@
+{
+  "name": "opencode-youtube-chapters",
+  "version": "0.1.0",
+  "description": "OpenCode plugin and command template for generating YouTube chapters from available transcripts.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Eduardo Ramirez",
+  "homepage": "https://github.com/eduardoemb/opencode-youtube-chapters#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eduardoemb/opencode-youtube-chapters.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eduardoemb/opencode-youtube-chapters/issues"
+  },
+  "keywords": [
+    "opencode",
+    "youtube",
+    "chapters",
+    "transcript",
+    "plugin"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./chapters": {
+      "types": "./dist/chapters/index.d.ts",
+      "import": "./dist/chapters/index.js"
+    },
+    "./parser": {
+      "types": "./dist/parser/youtube-input.d.ts",
+      "import": "./dist/parser/youtube-input.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "examples",
+    "scripts"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "smoke:opencode": "node scripts/opencode-smoke.mjs",
+    "verify": "npm run typecheck && npm test && npm run build && npm run smoke:opencode"
+  },
+  "dependencies": {
+    "@opencode-ai/plugin": "^1.15.13",
+    "youtube-transcript": "^1.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.3",
+    "vitest": "^4.1.8"
+  }
+}
