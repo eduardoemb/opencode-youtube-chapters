@@ -6,6 +6,8 @@ This package provides an OpenCode plugin with deterministic tools for transcript
 
 ## Quick path
 
+Prerequisite: OpenCode must already be authenticated with a model provider, such as ChatGPT Plus/Pro, OpenCode Zen, GitHub Copilot, or another configured provider. This plugin does not require its own LLM API key; it uses OpenCode's active model.
+
 1. Install the package.
 2. Add it to your global OpenCode config.
 3. Copy the `chapters.md` command template.
