@@ -22,8 +22,34 @@ describe("fetchTranscriptForInput", () => {
 
     expect(result.videoId).toBe("dQw4w9WgXcQ")
     expect(result.durationSeconds).toBe(25)
+    expect(result.chapterRules).toEqual([])
+    expect(result.glossary).toEqual({})
     expect(result.buckets).toHaveLength(1)
     expect(result.buckets[0].text).toBe("Arranque Tema central")
+  })
+
+  it("returns normalized chapter rules and glossary without mutating transcript buckets", async () => {
+    const provider: TranscriptProvider = {
+      async fetch(videoId) {
+        return {
+          videoId,
+          segments: [{ startSeconds: 0, durationSeconds: 5, text: "Seller Data habla de Seller" }],
+        }
+      },
+    }
+
+    const result = await fetchTranscriptForInput(
+      { input: "dQw4w9WgXcQ", bucketSeconds: 60 },
+      provider,
+      {
+        chapterRules: [" Usa Zeler como marca ", "", "No inventes nombres"],
+        glossary: { "Seller Data": "ZelerData", Seller: "Zeler", "": "Ignored" },
+      },
+    )
+
+    expect(result.chapterRules).toEqual(["Usa Zeler como marca", "No inventes nombres"])
+    expect(result.glossary).toEqual({ "Seller Data": "ZelerData", Seller: "Zeler" })
+    expect(result.buckets[0].text).toBe("Seller Data habla de Seller")
   })
 
   it("surfaces missing transcript errors from the provider", async () => {

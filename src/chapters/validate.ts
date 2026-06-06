@@ -1,9 +1,11 @@
+import { normalizeGlossary, type ChapterGlossary } from "./glossary.js"
 import { formatChapters } from "./format.js"
 import { type ChapterCandidate, parseChapterCandidates } from "./parse.js"
 import { MINIMUM_GAP_SECONDS, repairChapterCandidates } from "./repair.js"
 
 export interface ChapterValidationOptions {
   durationSeconds?: number
+  glossary?: ChapterGlossary
 }
 
 export interface ChapterValidationResult {
@@ -25,6 +27,7 @@ export function validateAndRepairChapters(
     errors.push("Videos under 30 seconds are not apt for YouTube chapters.")
   }
 
+  const glossary = normalizeGlossary(options.glossary)
   const parsed = parseChapterCandidates(text)
   errors.push(...parsed.errors)
 
@@ -47,7 +50,7 @@ export function validateAndRepairChapters(
   const valid = errors.length === 0
   return {
     valid,
-    lines: valid ? formatChapters(repaired.chapters) : [],
+    lines: valid ? formatChapters(repaired.chapters, glossary) : [],
     errors: unique(errors),
     warnings: unique(warnings),
     chapters: repaired.chapters,

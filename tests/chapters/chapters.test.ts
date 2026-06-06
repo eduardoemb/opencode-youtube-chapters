@@ -73,4 +73,14 @@ describe("validateAndRepairChapters", () => {
     expect(result.valid).toBe(false)
     expect(result.errors).toContain("Chapter timestamp 55s is beyond the video duration (45s).")
   })
+
+  it("applies glossary corrections to final titles using longest source first", () => {
+    const result = validateAndRepairChapters(
+      "00:00 - Seller Data contexto\n00:12 - Seller demo\n00:30 - Cierre",
+      { durationSeconds: 90, glossary: { Seller: "Zeler", "Seller Data": "ZelerData" } },
+    )
+
+    expect(result.valid).toBe(true)
+    expect(result.lines).toEqual(["00:00 - ZelerData contexto", "00:12 - Zeler demo", "00:30 - Cierre"])
+  })
 })

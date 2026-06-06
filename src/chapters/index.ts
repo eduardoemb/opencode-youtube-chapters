@@ -1,4 +1,5 @@
 export * from "./format.js"
+export * from "./glossary.js"
 export * from "./parse.js"
 export * from "./repair.js"
 export * from "./validate.js"

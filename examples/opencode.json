@@ -1,4 +1,15 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["opencode-youtube-chapters"]
+  "plugin": [
+    [
+      "opencode-youtube-chapters",
+      {
+        "chapterRules": ["Use Zeler and ZelerData when the transcript/model says Seller or Seller Data."],
+        "glossary": {
+          "Seller Data": "ZelerData",
+          "Seller": "Zeler"
+        }
+      }
+    ]
+  ]
 }

@@ -26,6 +26,30 @@ npm install -g opencode-youtube-chapters
 }
 ```
 
+Optional per-install chapter guidance uses OpenCode's plugin tuple form:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    [
+      "opencode-youtube-chapters",
+      {
+        "chapterRules": [
+          "Prefer exact product and company names from this configuration when they appear in the transcript context."
+        ],
+        "glossary": {
+          "Seller Data": "ZelerData",
+          "Seller": "Zeler"
+        }
+      }
+    ]
+  ]
+}
+```
+
+Restart OpenCode after changing plugin configuration; running sessions keep the already-loaded config.
+
 Create `~/.config/opencode/commands/chapters.md` from [`examples/commands/chapters.md`](examples/commands/chapters.md).
 
 ## Usage
@@ -59,7 +83,7 @@ Successful output is only chapter lines:
 | `youtube_chapters_fetch_transcript` | Normalizes the video input, fetches available subtitles/transcript, and returns compact chronological buckets. |
 | `youtube_chapters_validate` | Repairs and validates candidate chapter lines before final output. |
 
-The tools do not call an LLM. The `/chapters` command prompt instructs your active OpenCode model to call these tools, draft Spanish (Mexico) titles, validate them, and print only final lines.
+The tools do not call an LLM. The `/chapters` command prompt instructs your active OpenCode model to call these tools, draft Spanish (Mexico) titles, apply configured `chapterRules`/`glossary`, validate them, and print only final lines. Transcript buckets remain transcript-only; configured guidance is returned as separate metadata.
 
 ## Chapter rules
 

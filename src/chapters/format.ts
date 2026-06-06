@@ -1,7 +1,8 @@
 import type { ChapterCandidate } from "./parse.js"
+import { applyGlossaryCorrections, type ChapterGlossary } from "./glossary.js"
 
-export function formatChapters(chapters: ChapterCandidate[]): string[] {
-  return chapters.map((chapter) => `${formatTimestamp(chapter.seconds)} - ${formatTitle(chapter.title)}`)
+export function formatChapters(chapters: ChapterCandidate[], glossary: ChapterGlossary = {}): string[] {
+  return chapters.map((chapter) => `${formatTimestamp(chapter.seconds)} - ${formatTitle(chapter.title, glossary)}`)
 }
 
 export function formatTimestamp(totalSeconds: number): string {
@@ -17,8 +18,8 @@ export function formatTimestamp(totalSeconds: number): string {
   return `${pad2(minutes)}:${pad2(seconds)}`
 }
 
-function formatTitle(title: string): string {
-  return title.replace(/\s+/g, " ").trim()
+function formatTitle(title: string, glossary: ChapterGlossary): string {
+  return applyGlossaryCorrections(title, glossary).replace(/\s+/g, " ").trim()
 }
 
 function pad2(value: number): string {
