@@ -59,4 +59,4 @@ export const YouTubeChaptersPlugin: Plugin = async (_input, options = {}) => {
 
 export const server = YouTubeChaptersPlugin
 
-export default YouTubeChaptersPlugin
+export default { id: "opencode-youtube-chapters", server }

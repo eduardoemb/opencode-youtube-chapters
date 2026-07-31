@@ -5,7 +5,7 @@ const packageJson = JSON.parse(await readFile(new URL("../package.json", import.
 const pluginModule = await import(new URL("../dist/index.js", import.meta.url))
 
 assert.equal(typeof pluginModule.server, "function", "built plugin must export an OpenCode-compatible server function")
-assert.equal(pluginModule.default, pluginModule.server, "default export should point at the same plugin server")
+assert.deepEqual(pluginModule.default, { id: "opencode-youtube-chapters", server: pluginModule.server }, "default export must use the modern server module contract")
 assert.equal(pluginModule.YouTubeChaptersPlugin, pluginModule.server, "named plugin export should point at the same plugin server")
 
 const hooks = await pluginModule.server({})
